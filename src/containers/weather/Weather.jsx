@@ -13,8 +13,6 @@ import isToday from "dayjs/plugin/isToday";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 dayjs.extend(isToday);
-// http://localhost:3000/?lat={lat}&lon={lon}
-// http://localhost:3000/?lat=43.3247&lon=21.9033
 
 const Weather = () => {
   const history = useHistory();
@@ -44,7 +42,7 @@ const Weather = () => {
         <div className="weather-content-info">
           <AiOutlineCloud className="weather-content-info-icon" />
           <span className="weather-content-info-text">
-            {weather?.current.clouds}%{/* {weather.lat} */}
+            {weather?.current.clouds}%
           </span>
         </div>
         {/* wind */}
