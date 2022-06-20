@@ -6,7 +6,11 @@ export const useWeather = (values) => {
     ["all-data", values],
     async () => {
       const { data } = await getDataWeather(values);
-      return [data];
+
+      return data;
+    },
+    {
+      enabled: values.lat && values.lon,
     }
   );
   return { weather, weatherStatus };
