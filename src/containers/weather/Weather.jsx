@@ -10,12 +10,11 @@ import "./Weather.scss";
 
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 dayjs.extend(isToday);
 
 const Weather = () => {
-  const history = useHistory();
   const queryParams = new URLSearchParams(window.location.search);
   const lat = queryParams.get("lat");
   const lon = queryParams.get("lon");
@@ -31,7 +30,8 @@ const Weather = () => {
   );
 
   if (!lat || !lon) {
-    return history.push("/");
+    // return history.push("/");
+    return <div>Missing lat or lon</div>;
   }
 
   return (
