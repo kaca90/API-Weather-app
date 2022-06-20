@@ -10,7 +10,6 @@ import "./Weather.scss";
 
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
-import { useQuery } from "react-query";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 dayjs.extend(isToday);
