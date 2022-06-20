@@ -10,7 +10,7 @@ import "./Weather.scss";
 
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Error from "containers/error/Error";
 
 dayjs.extend(isToday);
 
@@ -30,8 +30,11 @@ const Weather = () => {
   );
 
   if (!lat || !lon) {
-    // return history.push("/");
-    return <div>Missing lat or lon</div>;
+    return (
+      <div>
+        <Error />
+      </div>
+    );
   }
 
   return (
@@ -120,11 +123,24 @@ const Weather = () => {
         {/* Alert list */}
         <div className="weather-alert-list">
           {weather?.alerts.map((alert) => (
-            <ul>
-              <li>{alert.sender_name}</li>
-              <li className="weather-alert-list-alert">{alert.event}</li>
-              <li>{alert.description}</li>
-            </ul>
+            <div className="weather-alert-list-content">
+              {/* sender_name */}
+              <div className="weather-alert-list-sender_name">
+                <div className="weather-alert-list-sender_name-text">
+                  {alert.sender_name}
+                </div>
+              </div>
+              {/* event */}
+              <div className="weather-alert-list-event">
+                <div className="weather-alert-list-event-text">
+                  {alert.event}
+                </div>
+              </div>
+              {/* desc */}
+              <div className="weather-alert-list-desc">
+                <div>{alert.description}</div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
