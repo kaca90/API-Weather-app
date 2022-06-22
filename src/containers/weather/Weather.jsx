@@ -1,3 +1,4 @@
+import "./Weather.scss";
 import { AiOutlineCloud } from "react-icons/ai";
 import { WiStrongWind } from "react-icons/wi";
 import { WiHumidity } from "react-icons/wi";
@@ -6,30 +7,46 @@ import { BsArrowDown } from "react-icons/bs";
 import { BsArrowUp } from "react-icons/bs";
 import { WiDegrees } from "react-icons/wi";
 import { useWeather } from "./useWeather";
-import "./Weather.scss";
-
+import { useCity } from "./useCity";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import Error from "containers/error/Error";
+import WeatherPerDay from "containers/weather_per_day/WetherPerDay";
 
 dayjs.extend(isToday);
 
-const Weather = () => {
+const Weather = (props) => {
   const queryParams = new URLSearchParams(window.location.search);
   const lat = queryParams.get("lat");
   const lon = queryParams.get("lon");
 
+  // city
+  const { cities } = useCity({
+    lat,
+    lon,
+    units: "metric",
+  });
+
+  // weather
   const { weather } = useWeather({
     lat,
     lon,
     units: "metric",
   });
 
+  // todays weather
   const todaysWeather = weather?.daily.find((day) =>
     dayjs.unix(day.dt).isToday()
   );
 
-  if (!lat || !lon) {
+  // redirection
+  if (!lat && !lon) {
+    return (
+      <div>
+        {props.history.push("/home")}
+      </div>
+    );
+  } else if (!lat || !lon) {
     return (
       <div>
         <Error />
@@ -98,7 +115,12 @@ const Weather = () => {
       {/* Location */}
       <div className="weather-location-content">
         <p className="weather-location-content-text">
-          NIS, <span>RS</span>
+          {cities?.map((city) => (
+            <div>
+              <span>{city.name}, </span>
+              <span>{city.country}</span>
+            </div>
+          ))}
         </p>
 
         {/* location description */}
@@ -118,6 +140,11 @@ const Weather = () => {
               alt="weather-icon"
             ></img>
           ))}
+        </div>
+
+        {/* Weather per day */}
+        <div className="weather-per-day">
+          <WeatherPerDay/>
         </div>
 
         {/* Alert list */}

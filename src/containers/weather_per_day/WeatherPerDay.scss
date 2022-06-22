@@ -1,0 +1,46 @@
+.weather_per_day {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #8fd6d6;
+
+  &-content {
+    font-size: 18px;
+    background-color: #a5e0e0;
+    border-radius: 23px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+
+    &-day-name,
+    &-humidity,
+    &-weather-icon,
+    &-temp {
+      padding: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    // weather icon
+    &-weather-icon {
+      width: 50px;
+
+      &-img {
+        width: 40px;
+      }
+    }
+
+    // max and min temp
+    &-temp {
+      &-degrees-icon {
+        font-size: 35px;
+        margin-left: -14px;
+      }
+
+      &-slash {
+        margin-left: -13px;
+        margin-right: 4px;
+      }
+    }
+  }
+}
