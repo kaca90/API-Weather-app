@@ -26,7 +26,8 @@ const Home = () => {
   return (
     <div className="home">
       <div className="container">
-        Weather in:
+        <p className="home__title">Weather in:</p>
+
         {weatherCities?.map((weatherCity) => (
           <Link
             to={"/weather?lat=" + weatherCity.lat + "&lon=" + weatherCity.lon}
