@@ -25,12 +25,12 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="home-content">
+      <div className="container">
         Weather in:
         {weatherCities?.map((weatherCity) => (
           <Link
             to={"/weather?lat=" + weatherCity.lat + "&lon=" + weatherCity.lon}
-            className="home-content-city-name"
+            className="home__city"
           >
             {weatherCity.cityName}
           </Link>

@@ -1,4 +1,4 @@
-import "./Weather.scss";
+// icons
 import { AiOutlineCloud } from "react-icons/ai";
 import { WiStrongWind } from "react-icons/wi";
 import { WiHumidity } from "react-icons/wi";
@@ -8,10 +8,14 @@ import { BsArrowUp } from "react-icons/bs";
 import { WiDegrees } from "react-icons/wi";
 import { useWeather } from "./useWeather";
 import { useCity } from "./useCity";
+// dayjs
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
+// comp
+import "./Weather.scss";
 import Error from "containers/error/Error";
 import WeatherPerDay from "containers/weather_per_day/WetherPerDay";
+import WeatherPerHour from "containers/weather_per_hour/WeatherPerHour";
 
 dayjs.extend(isToday);
 
@@ -41,11 +45,7 @@ const Weather = (props) => {
 
   // redirection
   if (!lat && !lon) {
-    return (
-      <div>
-        {props.history.push("/home")}
-      </div>
-    );
+    return <div>{props.history.push("/home")}</div>;
   } else if (!lat || !lon) {
     return (
       <div>
@@ -56,119 +56,119 @@ const Weather = (props) => {
 
   return (
     <div className="weather">
-      {/* Header */}
-      <div className="weather-content">
-        {/* cloud */}
-        <div className="weather-content-info">
-          <AiOutlineCloud className="weather-content-info-icon" />
-          <span className="weather-content-info-text">
-            {weather?.current.clouds}%
-          </span>
-        </div>
-        {/* wind */}
-        <div className="weather-content-info">
-          <WiStrongWind className="weather-content-info-icon" />
-          <span className="weather-content-info-text">
-            {weather?.current.wind_speed}m/s
-          </span>
-        </div>
-        {/* humidity */}
-        <div className="weather-content-info">
-          <WiHumidity className="weather-content-info-icon" />
-          <span className="weather-content-info-text">
-            {weather?.current.humidity}%
-          </span>
-        </div>
-      </div>
-
-      {/* Main temp*/}
-      <div className="weather-main-temp-content">
-        <div className="weather-main-temp-content-celsius">
-          <span className="weather-main-temp-content-celsius-text">
-            {Math.round(weather?.current.temp)}
-          </span>
-          <RiCelsiusFill className="weather-main-temp-content-celsius-icon" />
-        </div>
-
-        {/* arrows-degreeses */}
-        <div className="weather-main-temp-content-arrows-degreeses">
-          {/* max */}
-          <div className="weather-main-temp-content-arrows-degreeses-max">
-            <BsArrowUp className="weather-main-temp-content-arrowUp-icon" />
-            <span className="weather-main-temp-content-arrowUp-text">
-              {Math.round(todaysWeather?.temp.max)}
-            </span>
-            <WiDegrees className="weather-main-temp-content-degrees-for-icon-arrowUp" />
+      <div className="container">
+        {/* HEADER*/}
+        <div className="weather__info">
+          {/* cloud */}
+          <div className="weather__info-content">
+            <AiOutlineCloud className="weather__info-content-icon" />
+            <span>{weather?.current.clouds}%</span>
           </div>
 
-          {/* min */}
-          <div className="weather-main-temp-content-arrows-degreeses-min">
-            <BsArrowDown className="weather-main-temp-content-arrowDown-icon" />
-            <span className="weather-main-temp-content-arrowDown-text">
-              {Math.round(todaysWeather?.temp.min)}
-            </span>
-            <WiDegrees className="weather-main-temp-content-degrees-for-icon-arrowDown" />
+          {/* wind */}
+          <div className="weather__info-content">
+            <WiStrongWind className="weather__info-content-icon" />
+            <span>{weather?.current.wind_speed}m/s</span>
+          </div>
+
+          {/* humidity */}
+          <div className="weather__info-content">
+            <WiHumidity className="weather__info-content-icon" />
+            <span>{weather?.current.humidity}%</span>
           </div>
         </div>
-      </div>
 
-      {/* Location */}
-      <div className="weather-location-content">
-        <p className="weather-location-content-text">
-          {cities?.map((city) => (
-            <div>
-              <span>{city.name}, </span>
-              <span>{city.country}</span>
+        {/* TEMP*/}
+        <div className="weather__temp">
+          {/* main */}
+          <div className="weather__temp-main">
+            <span className="weather__temp-main-text">
+              {Math.round(weather?.current.temp ?? 0)}
+            </span>
+            <RiCelsiusFill className="weather__temp-main-icon" />
+          </div>
+
+          {/* arrows-degreeses */}
+          <div className="weather__temp-arrows-degreeses">
+            {/* max */}
+            <div className="weather__temp-arrows-degreeses-max">
+              <BsArrowUp />
+              <span>{Math.round(todaysWeather?.temp.max ?? 0)}</span>
+              <WiDegrees className="weather__temp-arrows-degreeses-max-degrees" />
             </div>
-          ))}
-        </p>
 
-        {/* location description */}
-        <div className="weather-location-content-desc">
-          {weather?.current.weather.map((weather) => (
-            <p>{weather.description}</p>
-          ))}
+            {/* min */}
+            <div className="weather__temp-arrows-degreeses-min">
+              <BsArrowDown />
+              <span>{Math.round(todaysWeather?.temp.min ?? 0)}</span>
+              <WiDegrees className="weather__temp-arrows-degreeses-min-degrees" />
+            </div>
+          </div>
         </div>
 
-        {/* location icon */}
-        <div>
-          {weather?.current.weather.map((weather) => (
-            <img
-              src={
-                "http://openweathermap.org/img/wn/" + weather.icon + "@2x.png"
-              }
-              alt="weather-icon"
-            ></img>
-          ))}
-        </div>
+        {/* LOCATION */}
+        <div className="weather__location">
+          {/* text */}
+          <div className="weather__location-text">
+            {cities?.map((city) => (
+              <div key={city.name}>
+                <span>{city.name}, </span>
+                <span>{city.country}</span>
+              </div>
+            ))}
+          </div>
 
-        {/* Weather per day */}
-        <div className="weather-per-day">
-          <WeatherPerDay/>
-        </div>
+          {/* description */}
+          <div className="weather__location-desc">
+            {weather?.current.weather.map((weather) => (
+              <p key={weather.id}>{weather.description}</p>
+            ))}
+          </div>
 
-        {/* Alert list */}
-        <div className="weather-alert-list">
-          {weather?.alerts.map((alert) => (
-            <div className="weather-alert-list-content">
-              {/* sender_name */}
-              <div className="weather-alert-list-sender_name">
-                <div className="weather-alert-list-sender_name-text">
-                  {alert.sender_name}
+          {/* icon */}
+          <div>
+            {weather?.current.weather.map((weather) => (
+              <img
+                key={weather.id}
+                src={
+                  "http://openweathermap.org/img/wn/" + weather.icon + "@2x.png"
+                }
+                alt="weather-icon"
+              ></img>
+            ))}
+          </div>
+
+          {/* WEATHER PER HOUR*/}
+          <div>
+            <WeatherPerHour />
+          </div>
+
+          {/* WEATHER PER DAY*/}
+          <div>
+            <WeatherPerDay />
+          </div>
+
+          {/* ALERT LIST */}
+          <div className="weather__alert">
+            {weather?.alerts.map((alert, index) => (
+              <div key={`alert-${index}`} className="weather__alert-content">
+                {/* sender_name */}
+                <div>
+                  <div>{alert.sender_name}</div>
+                </div>
+
+                {/* event */}
+                <div className="weather__alert-content-event">
+                  <div>{alert.event}</div>
+                </div>
+
+                {/* desc */}
+                <div>
+                  <div>{alert.description}</div>
                 </div>
               </div>
-              {/* event */}
-              <div className="weather-alert-list-event">
-                <div className="weather-alert-list-event-text">
-                  {alert.event}
-                </div>
-              </div>
-              {/* desc */}
-              <div className="weather-alert-list-desc">
-                <div>{alert.description}</div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
