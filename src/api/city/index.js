@@ -1,8 +1,8 @@
-import request from "../city/requestCity";
+import request from "../request";
 
 export const getCityData = async (params) =>
   request({
-    url: "/reverse",
+    url: "/geo/1.0/reverse",
     method: "GET",
     params,
   });

@@ -31,7 +31,7 @@ const Home = () => {
         {weatherCities?.map((weatherCity) => (
           <Link
             to={"/weather?lat=" + weatherCity.lat + "&lon=" + weatherCity.lon}
-            className="home__city"
+            className="home__city" key={weatherCity.cityName}
           >
             {weatherCity.cityName}
           </Link>

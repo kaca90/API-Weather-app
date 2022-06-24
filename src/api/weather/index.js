@@ -2,7 +2,7 @@ import request from "../request";
 
 export const getDataWeather = async (params) =>
   request({
-    url: "/onecall",
+    url: "/data/2.5/onecall",
     method: "GET",
     params,
   });
